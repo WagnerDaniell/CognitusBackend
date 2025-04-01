@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitusBackend.Api", "CognitusBackend\CognitusBackend.Api.csproj", "{FA316DBE-3007-458C-BE5E-CF4122906E88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitusBackend.Application", "CognitusBackend.Application\CognitusBackend.Application.csproj", "{6B703CAC-F006-440B-8BC4-F007E6DBBEB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitusBackend.Domain", "CognitusBackend.Domain\CognitusBackend.Domain.csproj", "{4723FFA9-6030-489C-85FD-DB9BA84CECF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitusBackend.Infrastructure", "CognitusBackend.Infrastructure\CognitusBackend.Infrastructure.csproj", "{931F9874-4C16-426F-A33B-8FACA3D9C0DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA316DBE-3007-458C-BE5E-CF4122906E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA316DBE-3007-458C-BE5E-CF4122906E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA316DBE-3007-458C-BE5E-CF4122906E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA316DBE-3007-458C-BE5E-CF4122906E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B703CAC-F006-440B-8BC4-F007E6DBBEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B703CAC-F006-440B-8BC4-F007E6DBBEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B703CAC-F006-440B-8BC4-F007E6DBBEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B703CAC-F006-440B-8BC4-F007E6DBBEB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4723FFA9-6030-489C-85FD-DB9BA84CECF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4723FFA9-6030-489C-85FD-DB9BA84CECF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4723FFA9-6030-489C-85FD-DB9BA84CECF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4723FFA9-6030-489C-85FD-DB9BA84CECF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{931F9874-4C16-426F-A33B-8FACA3D9C0DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{931F9874-4C16-426F-A33B-8FACA3D9C0DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{931F9874-4C16-426F-A33B-8FACA3D9C0DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{931F9874-4C16-426F-A33B-8FACA3D9C0DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
