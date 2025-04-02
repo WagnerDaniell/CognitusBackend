@@ -1,6 +1,8 @@
 ﻿using CognitusBackend.Application.DTOs.Response;
 using CognitusBackend.Application.Services;
+using CognitusBackend.Application.Validator;
 using CognitusBackend.Domain.Entities;
+using CognitusBackend.Domain.Exceptions;
 using CognitusBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +22,19 @@ namespace CognitusBackend.Application.UseCase.Auth
 
         public async Task<ActionResult<AuthResponse>> registerExecute(User user)
         {
-            //preciso de uma validação geral
+            var validation = new RegisterValidator();
+            var resultValidation = validation.Validate(user);
+
+            if(!resultValidation.IsValid)
+            {
+                throw new UnauthorizedException("O Payload não está no formato correto!");
+            }
 
             var ExistingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
 
             if (ExistingUser != null)
             {
-                //return (new { message = "Email already in use" }); vou ter que fazer uma exception
+                throw new UnauthorizedException("Usuário já cadastrado!");
             }
             
             try
@@ -39,7 +47,7 @@ namespace CognitusBackend.Application.UseCase.Auth
             }
             catch (Exception error)
             {
-                //return (new { message = "Error on creating user" }); vou ter que fazer uma exception
+                throw new Exception("Erro ao cadastrar usuário: " + error.Message);
             }
 
             var accessToken = _tokenService.GenerateToken(user);

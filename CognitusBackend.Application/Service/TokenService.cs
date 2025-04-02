@@ -17,7 +17,7 @@ namespace CognitusBackend.Application.Services
 
         public TokenService(IConfiguration configuration)
         {
-            _secretKey = configuration["Jwt:SecretKey"];
+            _secretKey = configuration["Jwt:SecretKey"] ?? "";
         }
 
         public string GenerateToken(User user)
