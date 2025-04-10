@@ -3,7 +3,7 @@ using CognitusBackend.Domain.Entities;
 
 namespace CognitusBackend.Application.Validator
 {
-    public class RegisterValidator : AbstractValidator<User>
+    internal class RegisterValidator : AbstractValidator<User>
     {
         public RegisterValidator() 
         {
