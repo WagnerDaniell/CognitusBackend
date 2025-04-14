@@ -1,4 +1,5 @@
-﻿using CognitusBackend.Application.DTOs.Response;
+﻿using CognitusBackend.Application.DTOs.Request;
+using CognitusBackend.Application.DTOs.Response;
 using CognitusBackend.Application.Services;
 using CognitusBackend.Application.Validator;
 using CognitusBackend.Domain.Entities;
@@ -20,12 +21,20 @@ namespace CognitusBackend.Application.UseCase.Auth
             _tokenService = token;
         }
 
-        public async Task<ActionResult<AuthResponse>> registerExecute(User user)
+        public async Task<ActionResult<AuthResponse>> registerExecute(RegisterRequest user)
         {
+            var newUser = new User
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password,
+                Schooling = user.Schooling
+            };
+
             var validation = new RegisterValidator();
             var resultValidation = validation.Validate(user);
 
-            if(!resultValidation.IsValid)
+            if (!resultValidation.IsValid)
             {
                 throw new UnauthorizedException("O Payload não está no formato correto!");
             }
@@ -36,12 +45,12 @@ namespace CognitusBackend.Application.UseCase.Auth
             {
                 throw new UnauthorizedException("Usuário já cadastrado!");
             }
-            
+
             try
             {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
 
-                await _context.Users.AddAsync(user);
+                await _context.Users.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
             }
@@ -50,7 +59,7 @@ namespace CognitusBackend.Application.UseCase.Auth
                 throw new Exception("Erro ao cadastrar usuário: " + error.Message);
             }
 
-            var accessToken = _tokenService.GenerateToken(user);
+            var accessToken = _tokenService.GenerateToken(newUser);
 
             return new AuthResponse("Sucess: Cadastrado com sucesso!", accessToken);
 

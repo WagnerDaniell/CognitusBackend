@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using CognitusBackend.Domain.Entities;
+using CognitusBackend.Application.DTOs.Request;
 
 namespace CognitusBackend.Application.Validator
 {
-    internal class RegisterValidator : AbstractValidator<User>
+    internal class RegisterValidator : AbstractValidator<RegisterRequest>
     {
         public RegisterValidator() 
         {

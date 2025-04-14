@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
-    , b => b.MigrationsAssembly("CognitusBackend.Infrastructure")));
+    , b => b.MigrationsAssembly("CognitusBackend.Api")));
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddHttpClient<OpenRouterService>();

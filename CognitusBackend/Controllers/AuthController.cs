@@ -22,7 +22,7 @@ namespace CognitusBackend.Api.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult> Authenticate([FromBody] User user)
+        public async Task<ActionResult> Authenticate([FromBody] RegisterRequest user)
         {
             var UseCase = new RegisterUseCase(_context, _tokenService);
 

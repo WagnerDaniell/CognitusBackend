@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CognitusBackend.Migrations
+namespace CognitusBackend.Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250401023604_UpdateHashPassword")]
-    partial class UpdateHashPassword
+    [Migration("20250414213858_addTables")]
+    partial class addTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,42 @@ namespace CognitusBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CognitusBackend.Domain.Entities.UserSearch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LastSearch")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSearches");
+                });
+
+            modelBuilder.Entity("CognitusBackend.Domain.Entities.UserSearch", b =>
+                {
+                    b.HasOne("CognitusBackend.Domain.Entities.User", "User")
+                        .WithMany("UserSearches")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CognitusBackend.Domain.Entities.User", b =>
+                {
+                    b.Navigation("UserSearches");
                 });
 #pragma warning restore 612, 618
         }

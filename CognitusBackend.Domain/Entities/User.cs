@@ -15,5 +15,8 @@ namespace CognitusBackend.Domain.Entities
         public string Password { get; set; } = string.Empty;
         [Required, Column(TypeName = "varchar(100)")]
         public string Schooling { get; set; } = string.Empty;
+
+
+        public ICollection<UserSearch> UserSearches { get; set; } = null!;
     }
 }
