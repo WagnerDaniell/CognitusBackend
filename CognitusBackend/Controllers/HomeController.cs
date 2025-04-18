@@ -1,6 +1,8 @@
 ﻿using CognitusBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using CognitusBackend.Application.UseCase.Home;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CognitusBackend.Api.Controllers
 {
@@ -15,13 +17,19 @@ namespace CognitusBackend.Api.Controllers
             _context = context;
         }
 
+
+        [Authorize]
         [HttpGet]
         [Route("home")]
-        public async Task<ActionResult> Home(string token)
+        public async Task<ActionResult> Home()
         {
             var useCase = new HomeUseCase(_context);
 
-            var result = await useCase.executeHome(token);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var guidId = Guid.Parse(userId);
+
+            var result = await useCase.executeHome(guidId);
 
             return Ok(result.Value);
         }

@@ -7,18 +7,18 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-    private const string ApiKey = "";
+    private const string ApiKey = "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";
 
     public OpenRouterService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
-    public async Task<string> GenerateTextAsync(GenerateRequest prompt)
+    public async Task<string> GenerateTextAsync(string prompt)
     {
         var requestBody = new
         {
-            model = "meta-llama/llama-4-scout:free", //deepseek/deepseek-chat-v3-0324:free
+            model = "meta-llama/llama-3.3-70b-instruct:free", //deepseek/deepseek-chat-v3-0324:free //meta-llama/llama-4-scout:free
             messages = new[]
             {
                 new { role = "system", content = "Você é um assistente útil que responde apenas em formato JSON. Retorne uma *array de objetos*, onde cada objeto representa uma questão com a seguinte estrutura:"
@@ -26,7 +26,7 @@ public class OpenRouterService
                 + "\n- pergunta: texto da pergunta" 
                 + "\n- alternativas: objeto com opções 'a', 'b', 'c' e 'd'" 
                 + "\n- correta: letra da alternativa correta (\"a\", \"b\", \"c\" ou \"d\")\n- tema: tema da questão"},
-                new { role = "user", content = $"Gerar 10 questões de múltipla escolha no formato descrito, com o tema: {prompt.Message}"}
+                new { role = "user", content = $"Gerar 10 questões de múltipla escolha no formato descrito, com o tema: {prompt}"}
             },
             max_tokens = 2000
         };

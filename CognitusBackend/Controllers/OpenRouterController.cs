@@ -1,5 +1,8 @@
 ﻿using CognitusBackend.Application.DTOs.Request;
+using CognitusBackend.Application.UseCase.OpenRouter;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CognitusBackend.Api.Controllers
 {
@@ -14,12 +17,16 @@ namespace CognitusBackend.Api.Controllers
             _generate = generate;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("generate")]
         public async Task<ActionResult> GenerateText([FromBody] GenerateRequest prompt)
         {
-                    var result = await _generate.GenerateTextAsync(prompt);
-            return Ok(result);
+            var UseCase = new OpenRouterUseCase(_generate);
+
+            var jsonResponse = await UseCase.executeGenerateQuest(prompt);
+
+            return Ok(jsonResponse);
         }
     }
 }

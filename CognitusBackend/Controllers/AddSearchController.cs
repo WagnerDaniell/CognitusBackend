@@ -1,7 +1,9 @@
 ﻿using CognitusBackend.Application.DTOs.Request;
 using CognitusBackend.Application.UseCase.Search;
 using CognitusBackend.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CognitusBackend.Api.Controllers
 {
@@ -16,13 +18,18 @@ namespace CognitusBackend.Api.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("addSearch")]
         public async Task<ActionResult> addSearch([FromBody] SearchRequest request)
         {
             var UseCase = new AddSearchUseCase(_context);
 
-            var response = await UseCase.executeAddSearch(request);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var guidId = Guid.Parse(userId);
+
+            var response = await UseCase.executeAddSearch(request, guidId);
 
             return Ok(response.Value);
         }

@@ -16,21 +16,12 @@ namespace CognitusBackend.Application.UseCase.Search
              _context = context;
         }
 
-        public async Task<ActionResult<MessageResponse>> executeAddSearch(SearchRequest request)
+        public async Task<ActionResult<MessageResponse>> executeAddSearch(SearchRequest request, Guid id)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadToken(request.token) as JwtSecurityToken;
-
-            var userId = jwtToken?.Claims.FirstOrDefault(c => c.Type == "nameid");
-
-            var Id = userId?.Value;
-
-            var GuidId = Guid.Parse(Id);
-
             var newDataSearch = new UserSearch
             {
                 LastSearch = request.LastSearch,
-                UserId = GuidId,
+                UserId = id,
 
             };
 
