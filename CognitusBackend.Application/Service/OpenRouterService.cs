@@ -7,7 +7,7 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-    private const string ApiKey = "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";
+    private const string ApiKey = "";
 
     public OpenRouterService(HttpClient httpClient)
     {
@@ -26,7 +26,7 @@ public class OpenRouterService
                 + "\n- pergunta: texto da pergunta" 
                 + "\n- alternativas: objeto com opções 'a', 'b', 'c' e 'd'" 
                 + "\n- correta: letra da alternativa correta (\"a\", \"b\", \"c\" ou \"d\")\n- tema: tema da questão"},
-                new { role = "user", content = $"Gerar {prompt.Quantity} questões de múltipla escolha no formato descrito, com o tema: {prompt.Message}"}
+                new { role = "user", content = $"Gerar 10 questões de múltipla escolha no formato descrito, com o tema: {prompt.Message}"}
             },
             max_tokens = 2000
         };
