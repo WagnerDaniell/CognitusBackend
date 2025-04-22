@@ -40,7 +40,7 @@ namespace CognitusBackend.Application.UseCase.Auth
 
             if(!BCrypt.Net.BCrypt.Verify(login.Password, user.Password))
             {
-                throw new Exception("Senha incorreta!");
+                throw new UnauthorizedException("Senha incorreta!");
             }
 
             var accessToken = _tokenService.GenerateToken(user);

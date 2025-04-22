@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CognitusBackend.Application.Services;
+using CognitusBackend.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseCors("Permission");
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
