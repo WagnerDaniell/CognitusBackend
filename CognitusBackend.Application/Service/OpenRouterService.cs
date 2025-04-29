@@ -7,7 +7,7 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-    private const string ApiKey = "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";
+    private const string ApiKey = "";
 
     public OpenRouterService(HttpClient httpClient)
     {
@@ -34,7 +34,7 @@ public class OpenRouterService
         var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
-        _httpClient.DefaultRequestHeaders.Add("HTTP-Referer", "http://localhost:5117");
+        _httpClient.DefaultRequestHeaders.Add("HTTP-Referer", "https://cognitusbackend.onrender.com");
         _httpClient.DefaultRequestHeaders.Add("X-Title", "Minha API .NET");
 
         var response = await _httpClient.PostAsync(ApiUrl, jsonContent);

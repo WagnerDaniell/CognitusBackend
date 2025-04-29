@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+//No momento utilizando http para fazer o deploy no docker
 builder.WebHost.UseUrls("http://*:5000");
 
 var app = builder.Build();
