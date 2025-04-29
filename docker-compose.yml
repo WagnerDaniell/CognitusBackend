@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: CognitusBackend/Dockerfile
     environment:
-      - KEY_OPENROUTER=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
+      - KEY_OPENROUTER=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
     ports:
       - "5000:5000"
       - "5001:5001"
