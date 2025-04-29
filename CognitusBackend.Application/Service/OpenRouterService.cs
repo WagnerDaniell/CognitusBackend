@@ -7,7 +7,7 @@ public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-    private const string ApiKey = "";
+    private const string ApiKey = "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";
 
     public OpenRouterService(HttpClient httpClient)
     {
@@ -18,7 +18,7 @@ public class OpenRouterService
     {
         var requestBody = new
         {
-            model = "meta-llama/llama-3.3-70b-instruct:free", //deepseek/deepseek-chat-v3-0324:free //meta-llama/llama-4-scout:free
+            model = "deepseek/deepseek-r1-distill-qwen-32b:free", //deepseek/deepseek-chat-v3-0324:free //meta-llama/llama-4-scout:free
             messages = new[]
             {
                 new { role = "system", content = "Você é um assistente útil que responde apenas em formato JSON. Retorne uma *array de objetos*, onde cada objeto representa uma questão com a seguinte estrutura:"
