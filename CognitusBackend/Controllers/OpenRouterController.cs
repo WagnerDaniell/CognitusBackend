@@ -17,6 +17,7 @@ namespace CognitusBackend.Api.Controllers
             _generate = generate;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("generate")]
         public async Task<ActionResult> GenerateText([FromBody] GenerateRequest prompt)
