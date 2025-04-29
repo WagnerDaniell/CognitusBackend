@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
+builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DockerContainerConnection")
     , b => b.MigrationsAssembly("CognitusBackend.Api")));
 
 builder.Services.AddScoped<TokenService>();
@@ -48,6 +48,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.WebHost.UseUrls("http://*:5000");
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
@@ -59,7 +61,7 @@ app.UseCors("Permission");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

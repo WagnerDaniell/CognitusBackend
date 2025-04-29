@@ -1,0 +1,9 @@
+services:
+  cognitusbackend.api:
+    image: ${DOCKER_REGISTRY-}cognitusbackendapi
+    build:
+      context: .
+      dockerfile: CognitusBackend/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
