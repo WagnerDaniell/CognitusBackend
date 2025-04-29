@@ -2,16 +2,18 @@
 using System.Text;
 using System.Text.Json;
 using CognitusBackend.Application.DTOs.Request;
+using Microsoft.Extensions.Configuration;
 
 public class OpenRouterService
 {
     private readonly HttpClient _httpClient;
     private const string ApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-    private const string ApiKey = "";
+    private readonly string _ApiKey;
 
-    public OpenRouterService(HttpClient httpClient)
+    public OpenRouterService(HttpClient httpClient, IConfiguration config)
     {
         _httpClient = httpClient;
+        _ApiKey = config["KEY_OPENROUTER"] ?? throw new Exception("Key Openrouter não definida!");
     }
 
     public async Task<string> GenerateTextAsync(string prompt)
@@ -33,7 +35,7 @@ public class OpenRouterService
 
         var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _ApiKey);
         _httpClient.DefaultRequestHeaders.Add("HTTP-Referer", "https://cognitusbackend.onrender.com");
         _httpClient.DefaultRequestHeaders.Add("X-Title", "Minha API .NET");
 
