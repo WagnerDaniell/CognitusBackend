@@ -4,6 +4,7 @@ using CognitusBackend.Application.Services;
 using CognitusBackend.Application.Validator;
 using CognitusBackend.Domain.Entities;
 using CognitusBackend.Domain.Exceptions;
+using CognitusBackend.Domain.Repositories;
 using CognitusBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,13 @@ namespace CognitusBackend.Application.UseCase.Auth
 {
     public class RegisterUseCase
     {
-        private readonly Context _context;
         private readonly TokenService _tokenService;
+        private readonly IUserRepository _userRepository;
 
-        public RegisterUseCase(Context context, TokenService token)
+        public RegisterUseCase(TokenService token, IUserRepository repository)
         {
-            _context = context;
             _tokenService = token;
+            _userRepository = repository;
         }
 
         public async Task<ActionResult<AuthResponse>> registerExecute(RegisterRequest user)
@@ -39,7 +40,7 @@ namespace CognitusBackend.Application.UseCase.Auth
                 throw new UnauthorizedException("O Payload não está no formato correto!");
             }
 
-            var ExistingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
+            var ExistingUser = await _userRepository.getByEmailAsync(user.Email);
 
             if (ExistingUser != null)
             {
@@ -50,8 +51,7 @@ namespace CognitusBackend.Application.UseCase.Auth
             {
                 newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
 
-                await _context.Users.AddAsync(newUser);
-                await _context.SaveChangesAsync();
+                await _userRepository.setUserAsync(newUser);
 
             }
             catch (Exception error)

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using CognitusBackend.Application.UseCase.Home;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using CognitusBackend.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace CognitusBackend.Api.Controllers
 {
@@ -10,20 +12,21 @@ namespace CognitusBackend.Api.Controllers
     [Route("api/c")]
     public class HomeController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly ISearchRepository _searchRepository;
+        private readonly IUserRepository _userRepository;
 
-        public HomeController(Context context)
+        public HomeController(Context context, ISearchRepository searchRepository, IUserRepository userRepository)
         {
-            _context = context;
+            _searchRepository = searchRepository;
+            _userRepository = userRepository;
         }
-
 
         [Authorize]
         [HttpGet]
         [Route("home")]
         public async Task<ActionResult> Home()
         {
-            var useCase = new HomeUseCase(_context);
+            var useCase = new HomeUseCase(_searchRepository, _userRepository);
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

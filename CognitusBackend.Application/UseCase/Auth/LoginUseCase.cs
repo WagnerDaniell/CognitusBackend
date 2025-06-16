@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using CognitusBackend.Application.Validator;
+using CognitusBackend.Domain.Repositories;
 
 namespace CognitusBackend.Application.UseCase.Auth
 {
     public class LoginUseCase
     {
-        private readonly Context _context;
+        private readonly IUserRepository _userRepository;
         private readonly TokenService _tokenService;
 
-        public LoginUseCase(Context context, TokenService token)
+        public LoginUseCase(TokenService token, IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
             _tokenService = token;
         }
 
@@ -31,7 +32,7 @@ namespace CognitusBackend.Application.UseCase.Auth
                 throw new UnauthorizedException("O Payload não está no formato correto!");
             }   
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == login.Email);
+            var user = await _userRepository.getByEmailAsync(login.Email);
 
             if (user == null)
             {

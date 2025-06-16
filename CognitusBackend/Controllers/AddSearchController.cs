@@ -1,5 +1,7 @@
 ﻿using CognitusBackend.Application.DTOs.Request;
 using CognitusBackend.Application.UseCase.Search;
+using CognitusBackend.Domain.Exceptions;
+using CognitusBackend.Domain.Repositories;
 using CognitusBackend.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,25 +13,37 @@ namespace CognitusBackend.Api.Controllers
     [Route("api/c")]
     public class AddSearchController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly ISearchRepository _searchRepository;
 
-        public AddSearchController(Context context)
+        public AddSearchController(ISearchRepository searchRepository)
         {
-            _context = context;
+            _searchRepository = searchRepository;
         }
 
         [Authorize]
         [HttpPost]
         [Route("addSearch")]
-        public async Task<ActionResult> addSearch([FromBody] SearchRequest request)
+        public async Task<ActionResult> addSearch([FromBody] string lastsearch)
         {
-            var UseCase = new AddSearchUseCase(_context);
+            var UseCase = new AddSearchUseCase(_searchRepository);
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            if (userId == null)
+            {
+                throw new NotFoundException("Id não encontrado!");
+            }
+
             var guidId = Guid.Parse(userId);
 
-            var response = await UseCase.executeAddSearch(request, guidId);
+            var newRequest = new SearchRequest
+            {
+                UserId = guidId,
+                LastSearch = lastsearch,
+
+            };
+
+            var response = await UseCase.executeAddSearch(newRequest);
 
             return Ok(response.Value);
         }

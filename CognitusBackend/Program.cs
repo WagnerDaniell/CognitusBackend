@@ -5,16 +5,20 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CognitusBackend.Application.Services;
 using CognitusBackend.Api.Middleware;
+using CognitusBackend.Domain.Repositories;
+using CognitusBackend.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DockerContainerConnection")
+builder.Services.AddDbContext<Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionDataBase")
     , b => b.MigrationsAssembly("CognitusBackend.Api")));
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddHttpClient<OpenRouterService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISearchRepository, SearchRepository>();
 
 builder.Services.AddCors(opcoes =>
 {
