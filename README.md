@@ -4,7 +4,7 @@
 Backend moderno com arquitetura em camadas, autenticação via JWT  
 e integração com inteligência artificial para geração de questões de revisão.
 
-📌 **Status:** Em desenvolvimento
+📌 **Status:** Finalizado!
 
 ---
 
@@ -14,7 +14,7 @@ e integração com inteligência artificial para geração de questões de revis
 - Entity Framework Core  
 - PostgreSQL  
 - JWT (JSON Web Token)  
-- Serviço externo de IA
+- Serviço externo de IA (OpenRouter)
 
 ---
 
@@ -23,7 +23,7 @@ e integração com inteligência artificial para geração de questões de revis
 ```
 /Domain         → Entidades e contratos  
 /Application    → Regras de negócio  
-/Infrastructure → Banco de dados e serviços externos  
+/Infrastructure → Banco de dados e repositories 
 /API            → Controllers e configuração  
 ```
 
